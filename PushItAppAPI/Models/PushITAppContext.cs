@@ -17,6 +17,7 @@ namespace PushItAppAPI.Models
         {
         }
 
+        public virtual DbSet<Historical> Historicals { get; set; }
         public virtual DbSet<PushUp> PushUps { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
@@ -25,13 +26,30 @@ namespace PushItAppAPI.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=192.168.0.157;Initial Catalog=PushITApp;User ID=sa;Password=Lkjiop0(");
+                optionsBuilder.UseSqlServer("Data Source=192.168.0.157;Initial Catalog=PushITApp;Persist Security Info=True;User ID=sa;Password=Lkjiop0(;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<Historical>(entity =>
+            {
+                entity.ToTable("Historical");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Historicals)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PushUpsHistory_Users");
+            });
 
             modelBuilder.Entity<PushUp>(entity =>
             {

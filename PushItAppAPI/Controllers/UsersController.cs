@@ -14,7 +14,6 @@ namespace PushItAppAPI.Controllers
     public class UsersController : ControllerBase
     {
 
-
         private readonly PushITAppContext db;
 
         public UsersController(PushITAppContext db)
