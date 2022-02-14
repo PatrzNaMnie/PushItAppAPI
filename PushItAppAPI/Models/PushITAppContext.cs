@@ -18,6 +18,7 @@ namespace PushItAppAPI.Models
         }
 
         public virtual DbSet<Historical> Historicals { get; set; }
+        public virtual DbSet<Measurement> Measurements { get; set; }
         public virtual DbSet<PushUp> PushUps { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
@@ -49,6 +50,37 @@ namespace PushItAppAPI.Models
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PushUpsHistory_Users");
+            });
+
+            modelBuilder.Entity<Measurement>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Arms).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.Bmi)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("BMI");
+
+                entity.Property(e => e.Bmr)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("BMR");
+
+                entity.Property(e => e.Chest).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.Height).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.Waist).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.Weight).HasColumnType("decimal(18, 0)");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Measurements)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Measurements_Users");
             });
 
             modelBuilder.Entity<PushUp>(entity =>

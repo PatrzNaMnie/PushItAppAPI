@@ -30,9 +30,16 @@ namespace PushItAppAPI.Controllers
 
         // GET api/<HistoricalController>/5
         [HttpGet("{UserId}")]
-        public IActionResult Get(int UserId)
+        public IActionResult GetByUserID(int UserId)
         {
             return Ok(db.Historicals.Where(p=>p.UserId == UserId).ToList());
+        }
+
+        // GET api/<HistoricalController>/5/
+        [HttpGet("{UserId}/{Date}")]
+        public IActionResult GetByUserIDandDate(int UserId, DateTime Date)
+        {
+            return Ok(db.Historicals.Where(p => p.UserId == UserId && p.Date.Date == Date.Date).ToList());
         }
 
         // POST api/<HistoricalController>

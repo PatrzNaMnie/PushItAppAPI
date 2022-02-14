@@ -10,6 +10,7 @@ namespace PushItAppAPI.Models
         public User()
         {
             Historicals = new HashSet<Historical>();
+            Measurements = new HashSet<Measurement>();
             PushUps = new HashSet<PushUp>();
         }
 
@@ -17,6 +18,7 @@ namespace PushItAppAPI.Models
         public string HashCode { get; set; }
 
         public virtual ICollection<Historical> Historicals { get; set; }
+        public virtual ICollection<Measurement> Measurements { get; set; }
         public virtual ICollection<PushUp> PushUps { get; set; }
     }
 }
