@@ -40,26 +40,15 @@ namespace PushItAppAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] User user)
         {
-            db.Users.Add(user);
+            db.Users.Add(
+                new User
+                {
+                    HashCode = user.HashCode
+                }
+                );
             db.SaveChanges();
 
-            return CreatedAtAction(
-                nameof(GetByHashCode),
-                new { id = user.Id },
-                user
-                );
-        }
-
-        // PUT api/<UsersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<UsersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return Ok();
         }
     }
 }

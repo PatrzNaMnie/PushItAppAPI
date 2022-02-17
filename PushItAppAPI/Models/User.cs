@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -15,6 +16,8 @@ namespace PushItAppAPI.Models
         }
 
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "HashCode is required"), MaxLengthAttribute(8, ErrorMessage = "HashCode can be 8 digit long")]
         public string HashCode { get; set; }
 
         public virtual ICollection<Historical> Historicals { get; set; }

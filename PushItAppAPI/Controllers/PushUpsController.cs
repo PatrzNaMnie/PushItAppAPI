@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PushItAppAPI.Models;
+using PushItAppAPI.ModelValidations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,14 +42,16 @@ namespace PushItAppAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] PushUp pushUp)
         {
-            db.PushUps.Add(pushUp);
+            db.PushUps.Add(
+                new PushUp
+                {
+                    UserId = pushUp.UserId,
+                    CompletedPushUps  = pushUp.CompletedPushUps
+                }
+                );
             db.SaveChanges();
 
-            return CreatedAtAction(
-                nameof(GetByUserId),
-                new { id = pushUp.Id },
-                pushUp
-                );
+            return Ok();
         }
 
         // PUT api/<PushUpsController>/5

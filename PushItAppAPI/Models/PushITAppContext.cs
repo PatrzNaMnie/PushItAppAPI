@@ -85,9 +85,7 @@ namespace PushItAppAPI.Models
 
             modelBuilder.Entity<PushUp>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
@@ -100,9 +98,7 @@ namespace PushItAppAPI.Models
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.HashCode)
                     .IsRequired()
